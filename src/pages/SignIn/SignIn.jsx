@@ -4,10 +4,10 @@ import RegisterAnimation from "../../assets/lotties/register.json";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 
-const Register = () => {
-  const { authLoading, setAuthLoading, registerUser } = useContext(AuthContext);
+const SignIn = () => {
+  const { authLoading, setAuthLoading, signInUser } = useContext(AuthContext);
 
-  const handleRegister = async (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
     setAuthLoading(true);
     const email = e.target.email.value;
@@ -16,7 +16,7 @@ const Register = () => {
     console.log({ email, password });
 
     try {
-      const userCredential = await registerUser(email, password);
+      const userCredential = await signInUser(email, password);
       console.log(userCredential);
     } catch (error) {
       console.log(error);
@@ -37,8 +37,8 @@ const Register = () => {
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <div className="card-body">
-            <h1 className="text-2xl font-bold text-center">Register Now</h1>
-            <form onSubmit={handleRegister}>
+            <h1 className="text-2xl font-bold text-center">Login Now</h1>
+            <form onSubmit={handleSignIn}>
               <fieldset className="fieldset">
                 <label className="label">Email</label>
                 <input
@@ -58,7 +58,7 @@ const Register = () => {
                   <a className="link link-hover">Forgot password?</a>
                 </div>
                 <button disabled={authLoading} className="btn btn-primary mt-4">
-                  {authLoading ? "Registering..." : "Register"}
+                  {authLoading ? "loging..." : "Login"}
                 </button>
               </fieldset>
             </form>
@@ -69,4 +69,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default SignIn;

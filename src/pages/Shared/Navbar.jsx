@@ -1,7 +1,17 @@
-import React from "react";
+import { use } from "react";
 import { NavLink } from "react-router";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 
 const Navbar = () => {
+  const { user, signOutUser, setAuthLoading } = use(AuthContext);
+
+  const handleSignOut = () => {
+    signOutUser()
+      .then(() => console.log("signed out successfully"))
+      .catch((error) => console.log(error))
+      .finally(() => setAuthLoading(false));
+  };
+
   const links = (
     <>
       <li>
@@ -40,14 +50,31 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <NavLink className="btn btn-ghost text-xl" to={'/'}>Creer Coder</NavLink>
+        <NavLink className="btn btn-ghost text-xl" to={"/"}>
+          Creer Coder
+        </NavLink>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end gap-2">
-        <NavLink className="btn btn-primary btn-outline" to={'/register'}>Register</NavLink>
-        <NavLink className="btn btn-primary" to={'/sign-in'}>Sign In</NavLink>
+        {!user ? (
+          <>
+            <NavLink className="btn btn-primary btn-outline" to={"/register"}>
+              Register
+            </NavLink>
+            <NavLink className="btn btn-primary" to={"/sign-in"}>
+              Sign In
+            </NavLink>
+          </>
+        ) : (
+          <button
+            onClick={handleSignOut}
+            className="btn btn-primary btn-outline"
+          >
+            Sign out
+          </button>
+        )}
       </div>
     </div>
   );
