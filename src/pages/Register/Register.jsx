@@ -1,8 +1,30 @@
 import Lottie from "lottie-react";
 
 import RegisterAnimation from "../../assets/lotties/register.json";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 
 const Register = () => {
+  const { authLoading, setAuthLoading, registerUser } = useContext(AuthContext);
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setAuthLoading(true);
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    console.log({ email, password });
+
+    try {
+      const userCredential = await registerUser(email, password);
+      console.log(userCredential);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -16,20 +38,28 @@ const Register = () => {
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <div className="card-body">
             <h1 className="text-2xl font-bold text-center">Login Now</h1>
-            <form>
+            <form onSubmit={handleRegister}>
               <fieldset className="fieldset">
                 <label className="label">Email</label>
-                <input type="email" className="input" placeholder="Email" />
+                <input
+                  type="email"
+                  name="email"
+                  className="input"
+                  placeholder="Email"
+                />
                 <label className="label">Password</label>
                 <input
                   type="password"
+                  name="password"
                   className="input"
                   placeholder="Password"
                 />
                 <div>
                   <a className="link link-hover">Forgot password?</a>
                 </div>
-                <button className="btn btn-primary mt-4">Register</button>
+                <button disabled={authLoading} className="btn btn-primary mt-4">
+                  {authLoading ? "Registering..." : "Register"}
+                </button>
               </fieldset>
             </form>
           </div>
