@@ -94,7 +94,7 @@ const JobDetails = () => {
 
       <div className="text-center mt-8">
         <button
-          onClick={() => navigate(`/apply/${_id}`)}
+          onClick={() => navigate(`/apply-job/${_id}`)}
           className="btn btn-primary"
         >
           Apply Now

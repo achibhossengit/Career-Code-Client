@@ -4,9 +4,13 @@ import RegisterAnimation from "../../assets/lotties/register.json";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import SocialLogin from "../Shared/SocialLogin";
+import { useLocation, useNavigate } from "react-router";
 
 const SignIn = () => {
   const { authLoading, setAuthLoading, signInUser } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state || "/";
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -17,8 +21,8 @@ const SignIn = () => {
     console.log({ email, password });
 
     try {
-      const userCredential = await signInUser(email, password);
-      console.log(userCredential);
+      await signInUser(email, password);
+      navigate(from);
     } catch (error) {
       console.log(error);
     } finally {
@@ -63,7 +67,7 @@ const SignIn = () => {
                 </button>
               </fieldset>
             </form>
-            <SocialLogin></SocialLogin>
+            <SocialLogin from={from}></SocialLogin>
           </div>
         </div>
       </div>
