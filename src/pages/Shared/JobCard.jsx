@@ -7,20 +7,18 @@ const JobCard = ({ job }) => {
     title,
     location,
     jobType,
-    category,
     applicationDeadline,
     salaryRange,
     description,
     company,
     requirements,
-    responsibilities,
-    status,
-    hr_email,
-    hr_name,
     company_logo,
   } = job;
   return (
-    <div className="card bg-base-300 p-2 w-96 shadow-sm transform transition duration-300 hover:scale-105 hover:shadow-xl hover:-translate-y-1 cursor-pointer">
+    <Link
+      to={`/jobs/${_id}`}
+      className="card bg-base-300 p-2 w-96 shadow-sm transform transition duration-300 hover:scale-105 hover:shadow-xl hover:-translate-y-1 cursor-pointer"
+    >
       <div className="flex gap-2 items-center">
         <figure>
           <img className="w-16" src={company_logo} alt="logo" />
@@ -47,12 +45,9 @@ const JobCard = ({ job }) => {
             </div>
           ))}
         </div>
-        <div className="flex justify-between items-center pt-5">
-            <p className="badge badge-success max-w-30">{applicationDeadline}</p>
-            <Link to={`/jobs/${_id}`} className="btn btn-primary btn-sm btn-outine">Apply Now</Link>
-        </div>
+        <p className="badge badge-success mt-5">{applicationDeadline}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 
