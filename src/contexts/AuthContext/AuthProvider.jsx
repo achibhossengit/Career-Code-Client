@@ -40,11 +40,13 @@ const AuthProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       axios
-        .post("http://localhost:3000/jwt", { email: currentUser.email })
+        .post(
+          "http://localhost:3000/jwt",
+          { email: currentUser.email },
+          { withCredentials: true }
+        )
         .then((res) => {
           console.log(res.data);
-          // bad way to save token
-          localStorage.setItem("token", res.data.token);
         })
         .catch((error) => console.log(error));
 
