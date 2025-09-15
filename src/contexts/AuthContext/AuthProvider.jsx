@@ -9,6 +9,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "../../firebase/firebase.init";
+import axios from "axios";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -38,6 +39,15 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      axios
+        .post("http://localhost:3000/jwt", { email: currentUser.email })
+        .then((res) => {
+          console.log(res.data);
+          // bad way to save token
+          localStorage.setItem("token", res.data.token);
+        })
+        .catch((error) => console.log(error));
+
       setAuthLoading(false);
     });
     return unSubscribe;
