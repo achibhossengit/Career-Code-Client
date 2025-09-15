@@ -9,6 +9,8 @@ import ApplyJob from "../pages/ApplyJob/ApplyJob";
 import MyApplications from "../pages/MyApplications/MyApplications";
 import AddJob from "../pages/AddJob/AddJob";
 import MyPostedJobs from "../pages/MyPostedJobs/MyPostedJobs";
+import ViewJobApplications from "../pages/ViewJobApplications/ViewJobApplications";
+import axios from "axios";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +50,19 @@ const router = createBrowserRouter([
             <MyPostedJobs />
           </PrivateRoutes>
         ),
+      },
+      {
+        path: "job-applications/:job_id",
+        element: (
+          <PrivateRoutes>
+            <ViewJobApplications />
+          </PrivateRoutes>
+        ),
+        hydrateFallbackElement: <div>Loading applications....</div>,
+        loader: ({ params }) =>
+          axios
+            .get(`http://localhost:3000/applications?job_id=${params.job_id}`)
+            .then((res) => res.data),
       },
       {
         path: "add-job",
