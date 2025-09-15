@@ -1,7 +1,9 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
 
 const AddJob = () => {
+  const { user } = useAuth();
   const handleAddNewJob = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -194,10 +196,11 @@ const AddJob = () => {
 
             <label className="label">Email</label>
             <input
+              readOnly
               type="email"
               name="hr_email"
+              value={user.email}
               className="input w-full"
-              placeholder="hello@example.com"
             />
           </fieldset>
 
