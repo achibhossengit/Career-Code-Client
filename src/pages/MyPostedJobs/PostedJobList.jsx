@@ -22,12 +22,12 @@ const PostedJobList = ({ jobsByEmailPromise }) => {
               <th>{index}</th>
               <td>{job.title}</td>
               <td>{job.applicationDeadline}</td>
-              <td>
+              <td className="text-end">
                 <Link
                   to={`/job-applications/${job._id}`}
                   className="text-blue-500 underline"
                 >
-                  Applications
+                  Submited: {job.application_count}
                 </Link>
               </td>
             </tr>
