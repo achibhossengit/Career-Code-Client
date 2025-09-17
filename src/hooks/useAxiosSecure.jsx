@@ -1,0 +1,20 @@
+import axios from "axios";
+import useAuth from "./useAuth";
+
+const axiosInstance = axios.create({ baseURL: "http://localhost:3000/" });
+
+const useAxiosSecure = () => {
+  const { user } = useAuth();
+  axiosInstance.interceptors.request.use(
+    (config) => {
+      config.headers.authorization = `Bearer ${user.accessToken}`;
+      return config;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+  return axiosInstance;
+};
+
+export default useAxiosSecure;

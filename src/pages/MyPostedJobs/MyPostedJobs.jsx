@@ -1,15 +1,16 @@
-import React, { Suspense } from "react";
-import useAuth from "../../hooks/useAuth";
-import { jobsByEmailPromise } from "../../api/jobsByEmailApi";
+import { Suspense } from "react";
 import PostedJobList from "./PostedJobList";
+import useJobsApi from "../../api/useJobsApi";
 
 const MyPostedJobs = () => {
-  const { user } = useAuth();
+  const { jobsByEmailPromise } = useJobsApi();
   return (
     <div>
       <h2 className="text-3xl font-bold text-center">My posted Jobs: </h2>
-      <Suspense fallback={'Loading your posted jobs...'}>
-        <PostedJobList jobsByEmailPromise={jobsByEmailPromise(user.email)}></PostedJobList>
+      <Suspense fallback={"Loading your posted jobs..."}>
+        <PostedJobList
+          jobsByEmailPromise={jobsByEmailPromise()}
+        ></PostedJobList>
       </Suspense>
     </div>
   );
